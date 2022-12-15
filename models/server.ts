@@ -1,5 +1,6 @@
 import express, { Application } from "express";
 import routerUsuarios from "../routes/usuario";
+import db from "../db/connection";
 import cors from "cors";
 export class Server {
   private app: Application;
@@ -11,8 +12,9 @@ export class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT ?? '8000';
+    
+    this.dbConection();
     this.middlewares(); //los middlewares tiene que ir antes de las rutas
-
     this.routes();
   }
 
@@ -29,5 +31,15 @@ export class Server {
 
   routes(){
     this.app.use(this.apiPath.usuarios, routerUsuarios);
+  }
+  async dbConection(){
+    try {
+      await db.authenticate();
+      console.log(`LOG Base de datos online!! `);
+    } catch (error) {
+      throw new Error(error+'')
+      
+    }
+
   }
 }
