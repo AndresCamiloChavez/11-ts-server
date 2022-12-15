@@ -2,11 +2,13 @@ import express, { Application } from "express";
 import routerUsuarios from "../routes/usuario";
 import db from "../db/connection";
 import cors from "cors";
+import routerAuth from "../routes/auth";
 export class Server {
   private app: Application;
   private port: string;
   private apiPath = {
-    usuarios: '/api/v1/usuarios'
+    usuarios: '/api/v1/usuarios',
+    auth: '/api/v1/auth',
   }
 
   constructor() {
@@ -31,6 +33,7 @@ export class Server {
 
   routes(){
     this.app.use(this.apiPath.usuarios, routerUsuarios);
+    this.app.use(this.apiPath.auth, routerAuth);
   }
   async dbConection(){
     try {
@@ -38,7 +41,6 @@ export class Server {
       console.log(`LOG Base de datos online!! `);
     } catch (error) {
       throw new Error(error+'')
-      
     }
 
   }

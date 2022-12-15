@@ -1,17 +1,26 @@
-import { Router } from "express";
+import { Router } from 'express';
+import { check } from 'express-validator';
 import {
   deleteUsuario,
   getUsuario,
   getUsuarios,
   postUsuario,
   putUsuario,
-} from "../controller/usuario";
+} from '../controller/usuario';
+import validarCampos from '../middlewares/validar-campos';
+import { existeUsuarioByEmail } from "../helpers/validators";
 const router = Router();
 
-router.get("/", getUsuarios);
-router.get("/:id", getUsuario);
-router.post("/", postUsuario);
-router.put("/:id", putUsuario);
-router.delete("/:id", deleteUsuario);
+router.get('/', getUsuarios);
+router.get('/:id', getUsuario);
+router.post('/',[
+  check('nombre', 'El nombre es obigatorio').notEmpty(),
+  check('email', 'El correo es obigatorio').notEmpty(),
+  check('password', 'La contraseña es obigatoria').notEmpty(),
+  check("email").custom(existeUsuarioByEmail),
+  validarCampos
+],postUsuario);
+router.put('/:id', putUsuario);
+router.delete('/:id', deleteUsuario);
 
 export default router;

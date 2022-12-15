@@ -9,6 +9,9 @@ const Usuario = connection_1.default.define('Usuario', {
     nombre: {
         type: sequelize_1.DataTypes.STRING
     },
+    password: {
+        type: sequelize_1.DataTypes.STRING
+    },
     email: {
         type: sequelize_1.DataTypes.STRING
     },
