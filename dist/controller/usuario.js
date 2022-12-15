@@ -23,19 +23,20 @@ exports.getUsuarios = getUsuarios;
 const getUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const usuario = yield usuario_1.default.findByPk(id);
+    const emailUsuario = usuario === null || usuario === void 0 ? void 0 : usuario.getDataValue("email");
     if (!usuario) {
         return res.status(404).json({
             msg: `No existe un usuario por el id ${id}`,
         });
     }
-    res.status(200).json(usuario);
+    res.status(200).json({ usuario });
 });
 exports.getUsuario = getUsuario;
 const postUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { nombre, email } = req.body;
     const password = bcrypt_1.default.hashSync(req.body.password, 10);
     const usuario = yield usuario_1.default.create({ nombre, email, password });
-    return res.status(200).json({ msg: 'ok' });
+    return res.status(200).json({ usuario });
 });
 exports.postUsuario = postUsuario;
 const putUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

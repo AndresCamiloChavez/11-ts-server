@@ -11,13 +11,14 @@ export const getUsuario = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const usuario = await Usuario.findByPk(id);
+  const emailUsuario = usuario?.getDataValue("email");
 
   if (!usuario) {
     return res.status(404).json({
       msg: `No existe un usuario por el id ${id}`,
     });
   }
-  res.status(200).json(usuario);
+  res.status(200).json({ usuario });
 };
 export const postUsuario = async (req: Request, res: Response) => {
   const { nombre, email } = req.body;
@@ -26,7 +27,7 @@ export const postUsuario = async (req: Request, res: Response) => {
 
   const usuario = await Usuario.create({ nombre, email, password });
 
-  return res.status(200).json({msg: 'ok'});
+  return res.status(200).json({ usuario });
 };
 export const putUsuario = async (req: Request, res: Response) => {
   const { id } = req.params;
