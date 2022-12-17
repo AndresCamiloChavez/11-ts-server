@@ -29,7 +29,6 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     //Generar jwt
     const token = (0, generar_token_1.default)(usuario === null || usuario === void 0 ? void 0 : usuario.getDataValue('id'));
     return res.status(200).json({
-        msg: "Todo OK!",
         token
     });
 }));

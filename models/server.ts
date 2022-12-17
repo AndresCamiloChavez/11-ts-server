@@ -40,8 +40,9 @@ export class Server {
       await db.authenticate();
       console.log(`LOG Base de datos online!! `);
     } catch (error) {
-      throw new Error(error+'')
+      // throw new Error('Ocurrió un error, la base de datos no funciono!');
+      console.log('Ocurrió un error', error);
+      
     }
-
   }
 }

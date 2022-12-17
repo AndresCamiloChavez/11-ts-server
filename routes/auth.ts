@@ -24,7 +24,6 @@ router.post("/login", async (req: Request, res: Response) => {
 
 
   return res.status(200).json({
-    msg: "Todo OK!",
     token
   });
 });
