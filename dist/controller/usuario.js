@@ -35,8 +35,16 @@ exports.getUsuario = getUsuario;
 const postUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { nombre, email } = req.body;
     const password = bcrypt_1.default.hashSync(req.body.password, 10);
-    const usuario = yield usuario_1.default.create({ nombre, email, password });
-    return res.status(200).json({ usuario });
+    try {
+        const usuario = yield usuario_1.default.create({ nombre, email, password });
+        return res.status(200).json(usuario);
+    }
+    catch (error) {
+        console.log('Ocurrió un error al momento de crear un usuario');
+        return res.status(400).json({
+            msg: 'Ocurrió un error (grave), por comuníquese con el administrador!'
+        });
+    }
 });
 exports.postUsuario = postUsuario;
 const putUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

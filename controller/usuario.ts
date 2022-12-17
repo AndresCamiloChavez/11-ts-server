@@ -22,12 +22,16 @@ export const getUsuario = async (req: Request, res: Response) => {
 };
 export const postUsuario = async (req: Request, res: Response) => {
   const { nombre, email } = req.body;
-
   const password = bycript.hashSync(req.body.password, 10);
-
-  const usuario = await Usuario.create({ nombre, email, password });
-
-  return res.status(200).json({ usuario });
+  try {
+    const usuario = await Usuario.create({ nombre, email, password });
+    return res.status(200).json( usuario );
+  } catch (error) {
+    console.log('Ocurrió un error al momento de crear un usuario');
+    return res.status(400).json({
+      msg: 'Ocurrió un error (grave), por comuníquese con el administrador!'
+    });
+  }
 };
 export const putUsuario = async (req: Request, res: Response) => {
   const { id } = req.params;

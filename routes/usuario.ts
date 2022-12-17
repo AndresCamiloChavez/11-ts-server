@@ -9,6 +9,7 @@ import {
 } from '../controller/usuario';
 import validarCampos from '../middlewares/validar-campos';
 import { existeUsuarioByEmail } from "../helpers/validators";
+import { validartJWT } from '../middlewares/validar-jwt';
 const router = Router();
 
 router.get('/', getUsuarios);
@@ -18,6 +19,7 @@ router.post('/',[
   check('email', 'El correo es obigatorio').notEmpty(),
   check('password', 'La contraseña es obigatoria').notEmpty(),
   check("email").custom(existeUsuarioByEmail),
+  validartJWT,
   validarCampos
 ],postUsuario);
 router.put('/:id', putUsuario);

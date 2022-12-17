@@ -3,10 +3,9 @@ import bycript from "bcrypt";
 import generarToken from "../helpers/generar-token";
 import { Request, Response } from "express";
 
-export const login = async (req: Request, res: Response) => {
+export const  login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const usuario = await Usuario.findOne({ where: { email } });
-
   const isValidPassword = bycript.compareSync(
     password,
     usuario?.getDataValue("password")
